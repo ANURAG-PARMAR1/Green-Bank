@@ -346,6 +346,13 @@ const sendMoney = async (req, res) => {
     }
 
     const money = req.body.money;
+    if(user.amount < money) {
+      return res.status(401).json({
+        success:false,
+        message:'Insufficient balance',
+    })
+    }
+    
     console.log( "user ki ID", user._id);
     sendingUserMoney(user._id, checkUserPresent, money);
     return res.status(200).json({
